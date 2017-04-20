@@ -25,13 +25,13 @@ Search the text "key" on a web page and it checks for updates and download.
 
 **Hermes::Update::UpdateByWebPage** => *string id, float version, string url*
 
-**bool update** => *string directory (default "")*
+**bool update** => *string directory (default "")*<br />
 returns true if the operation has sucesfully and false if not.
 
-**bool update_is_avaliable**
+**bool update_is_avaliable**<br />
 returns true if an update is available and false if not.
 
-**string get_update_link**
+**string get_update_link**<br />
 returns the download link of update file.
 
 ![alt tag](https://1.bp.blogspot.com/-_jpb79jbgPA/WPfWRvqzcBI/AAAAAAAAHGQ/HkUY_ZX6-uI2S7wicCePDFGMeWswKGoegCLcB/s1600/5.png)
