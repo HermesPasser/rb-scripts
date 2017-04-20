@@ -4,6 +4,8 @@ require 'net/http'
 require 'open-uri'
 require 'openssl'
 
+#dar um trim nos indices do array
+
 module Hermes
 	module Update
 		class UpdateByWebPage
@@ -66,19 +68,19 @@ module Hermes
 			
 			def update_is_avaliable
 				unless get_download_link == nil
-					return current_version.to_i <= get_version.to_i
+					return current_version.to_f <= get_version.to_f
 				end
 				return false
 			end
 			
 			def get_download_link
 				i = get_update_info
-				return i[2]
+				return i[2].strip
 			end
 			
 			private def get_version
 				i = get_update_info
-				i[1]
+				i[1].strip
 			end
 			
 			private def get_update_info
