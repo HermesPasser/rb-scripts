@@ -23,7 +23,7 @@ Search the text "key" on a web page and it checks for updates and download.
 
 ## A tiny doc
 
-**Hermes::Update::UpdateByWebPage **=> *string id, float version, string url*
+**Hermes::Update::UpdateByWebPage** => *string id, float version, string url*
 
 **bool update** => *string directory (default "")*
 returns true if the operation has sucesfully and false if not.
