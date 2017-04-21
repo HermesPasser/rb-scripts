@@ -1,10 +1,17 @@
-#Hermes Passer in 19-04-20017
-
+#---------------------------- UpdateByWebPage ------------------------------#
+# by Hermes Passer				                                            #
+# in 19-04-2017					                                            #
+# GitHub HermesPasser/UpdateByWebPage                                       #
+#---------------------------------------------------------------------------#
+# Update system for ruby programs that checks on a page specifies whether   #
+#updates are available.                                                     #
+#---------------------------------------------------------------------------#
+	
+#require_relative 'unpackwin'
+require 'fileutils'
 require 'net/http'
 require 'open-uri'
 require 'openssl'
-
-#dar um trim nos indices do array
 
 module Hermes
 	module Update
@@ -35,24 +42,23 @@ module Hermes
 			
 			def update directory = ""
 				if !update_is_avaliable then return false end
-				link_all = get_download_link
 				
 				#Url
-				if link_all.include? "http://"
-					link_all = link_all.gsub("http://", "https://")
-				elsif !link_all.include? "https://"
-					link_all = "https://" + link_all
-				end
-				
+				link_all = get_download_link.gsub("http://", "https://")
+				link_all = !link_all.include?("https://") ? "https://" + link_all : link_all
+		
 				#File name and destination
 				file_name = link_all[link_all.rindex("/") + 1, link_all.length]
-				unless directory == "" or nil
+				if directory == "" or directory == nil
+					directory = Dir.pwd
+				else
 					if directory[directory.length - 1] == "/"
 						directory = directory[0, directory.length - 1]
 					end
-					file_name = "#{directory}/#{file_name}"
 				end
 
+				file_name = "#{directory}/#{file_name}"
+				
 				#Download
 				begin
 				  open(file_name, 'wb') do |file|
@@ -62,7 +68,6 @@ module Hermes
 					puts e
 					return false
 				end
-				
 				return true
 			end
 			
@@ -81,7 +86,7 @@ module Hermes
 			private def get_version
 				i = get_update_info
 				i[1].strip
-			end
+			end			
 			
 			private def get_update_info
 				html = get_html.split(/\n/)
