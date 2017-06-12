@@ -23,7 +23,7 @@ Update system for ruby programs that checks on a page specifies whether updates 
 
 ## A tiny doc
 
-**Hermes::Update::UpdateByWebPage** => *string id, float version, string url*
+**Hermes::Update::ByWebPage** => *string id, float version, string url*
 
 **bool update** => *string directory (default "")*<br />
 returns true if the operation has sucesfully and false if not.

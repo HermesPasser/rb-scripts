@@ -7,7 +7,6 @@
 #updates are available.                                                     #
 #---------------------------------------------------------------------------#
 	
-#require_relative 'unpackwin'
 require 'fileutils'
 require 'net/http'
 require 'open-uri'
@@ -15,7 +14,7 @@ require 'openssl'
 
 module Hermes
 	module Update
-		class UpdateByWebPage
+		class ByWebPage
 			attr_accessor :project_id,  :current_version
 			attr_reader   :update_link_domain, :update_link_page
 			
@@ -73,7 +72,7 @@ module Hermes
 			
 			def update_is_avaliable
 				unless get_download_link == nil
-					return current_version.to_f <= get_version.to_f
+					return current_version.to_f < get_version.to_f
 				end
 				return false
 			end
