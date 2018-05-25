@@ -1,10 +1,9 @@
 #---------------------------- UpdateByWebPage ------------------------------#
 # by Hermes Passer				                                            #
 # in 19-04-2017					                                            #
-# GitHub HermesPasser/UpdateByWebPage                                       #
 #---------------------------------------------------------------------------#
 # Update system for ruby programs that checks on a page specifies whether   #
-#updates are available.                                                     #
+# updates are available.                                                    #
 #---------------------------------------------------------------------------#
 	
 require 'fileutils'
@@ -60,7 +59,7 @@ module Hermes
 				
 				#Download
 				begin
-				  open(file_name, 'wb') do |file|
+					open(file_name, 'wb') do |file|
 						file << open(link_all, {ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE}).read
 					end
 				rescue Exception => e
