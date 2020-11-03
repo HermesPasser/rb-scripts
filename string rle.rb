@@ -2,7 +2,7 @@
 # VSR-RLE (Very simple Ruby Run-length encoding)
 # (C) Hermes Passer
 #
-# CAN'T HANDLE NUMBERS ON THE ORIGINAL TEXT
+# CAN'T HANDLE NUMBERS IN THE TEXT
 #
 
 module RLE	
@@ -42,10 +42,10 @@ module RLE
 			occurrences = get_next_occ(raw_text, current_index, current_char)
 			
 			if occurrences > 0
-				new_text += "#{occurrences}#{current_char}"
+				new_text << "#{occurrences}#{current_char}"
 				current_index += occurrences - 1 # -1 'cause at end of loop has a +1
 			else
-				new_text += current_char
+				new_text << current_char
 			end
 			
 			current_index += 1
@@ -63,10 +63,10 @@ module RLE
 			
 			if is_numeric?(current_char)
 				occ_count, indexes_to_skip = get_multi_digit_int(raw_text[current_index, raw_text.length])
-				new_text += raw_text[current_index + indexes_to_skip] * occ_count
+				new_text << raw_text[current_index + indexes_to_skip] * occ_count
 				current_index += indexes_to_skip
 			else
-				new_text += current_char
+				new_text << current_char
 			end
 			
 			current_index += 1
