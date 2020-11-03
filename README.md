@@ -1,3 +1,3 @@
 # rb-scripts
 
-Scripts in ruby to general purposes, usually for didactic purposes web-crawler's related.
+Some random scripts, usually for web-crawling related.
