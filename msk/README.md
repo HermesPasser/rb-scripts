@@ -53,7 +53,8 @@ The site has closed down so download the chapters are impossible now.
 ## zipfy
 
 Zip the current folder
----## mobify
+
+## mobify
 
 Create a .mobi of all zip/rar/cbz in the current directory. Needs KCC and Kindlegen.
 
