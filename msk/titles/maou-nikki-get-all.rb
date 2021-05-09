@@ -52,7 +52,25 @@ links_v2 = [
 	["https://sabishiidesu.com/2020/09/01/maou-sama-v2c4/","Chapter 4 - Long-lived Race"],
 	["https://sabishiidesu.com/2020/09/06/maou-sama-v2c5/","Chapter 5 - Apple Thieves"],
 	["https://sabishiidesu.com/2020/10/02/maou-sama-v2c6/","Chapter 6 - The Elders"],
-	["https://sabishiidesu.com/2020/10/07/maou-sama-v2c7/","Chapter 7 - Identity"]
+	["https://sabishiidesu.com/2020/10/07/maou-sama-v2c7/","Chapter 7 - Identity"],
+	["https://sabishiidesu.com/2020/12/03/maou-sama-v2c8/","Chapter 8 - Interrogation"],
+	["https://sabishiidesu.com/2020/12/06/maou-sama-v2c9/","Chapter 9 - Chatter"],
+	["https://sabishiidesu.com/2020/12/20/maou-sama-v2c10/","Chapter 10 - Sleep Disturbance"],
+	["https://sabishiidesu.com/2020/12/23/maou-sama-v2c11/","Chapter 11 - Rematch"],
+	["https://sabishiidesu.com/2021/01/03/maou-sama-v2c12/","Chapter 12 - The Circumstances of Demons Race"],
+	["https://sabishiidesu.com/2021/01/04/maou-sama-v2c13/","Chapter 13 - The Wise God"],
+	["https://sabishiidesu.com/2021/01/06/maou-sama-v2c14/","Chapter 14 - The Angels"],
+	["https://sabishiidesu.com/2021/01/09/maou-sama-v2c15/","Chapter 15 - Diary"],
+	["https://sabishiidesu.com/2021/01/23/maou-sama-v2c16/","Chapter 16 - Dere"],
+	["https://sabishiidesu.com/2021/02/09/maou-sama-v2c17/","Chapter 17 - Feast"],
+	["https://sabishiidesu.com/2021/02/10/maou-sama-v2c18/","Chapter 18 - Siege"],
+	["https://sabishiidesu.com/2021/02/18/maou-sama-v2c19/","Chapter 19 - Pajama Party"],
+	["https://sabishiidesu.com/2021/02/23/maou-sama-v2c20/","Chapter 20 - Fog"],
+	["https://sabishiidesu.com/2021/02/27/maou-sama-v2c21/","Chapter 21 - Emperor"],
+	["https://sabishiidesu.com/2021/04/25/maou-sama-v2c22/","Chapter 22 - Responsabilities"],
+	["https://sabishiidesu.com/2021/04/29/maou-sama-v2c23/","Chapter 23 - Opinion"],
+	["https://sabishiidesu.com/2021/05/01/maou-sama-v2c24/","Chapter 24 - The Return Preparation"],
+	["https://sabishiidesu.com/2021/05/08/maou-sama-v2c25/","Chapter 25 - Return"],
 ]
 
 require 'open-uri'
