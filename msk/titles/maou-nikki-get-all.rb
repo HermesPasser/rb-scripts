@@ -75,7 +75,7 @@ def download links, filename
 	print filename
 	links.each do |l, n|
 		puts " #{n}..."
-		open(l) do |con|
+		URI.open(l) do |con|
 			content = con.read
 			content.encode!("ASCII", Encoding::UTF_8, undef: :replace)
 			istart = content.index("<div class=\"entry-content\">")
