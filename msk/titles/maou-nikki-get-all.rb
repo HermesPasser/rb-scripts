@@ -95,7 +95,9 @@ def download links, filename
 		puts " #{n}..."
 		URI.open(l) do |con|
 			content = con.read
-			content.encode!("ASCII", Encoding::UTF_8, undef: :replace)
+			# replace  non breaking space (basically a tab) with nothing since utf will show as '?' and html will ignore " " and "\t"
+			# TODO: try replicate it with css
+			content.encode!("ASCII", Encoding::UTF_8, undef: :replace, :replace  => "") 
 			istart = content.index("<div class=\"entry-content\">")
 			iend = content.index("<!-- .entry-content -->")
 			final_content += content[istart...iend]
