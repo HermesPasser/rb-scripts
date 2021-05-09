@@ -4,13 +4,27 @@
 require 'fileutils'
 require './shared'
 
-def get_page_links text
+# merge with the other version
+def get_page_links_s3_links text
 	# dependendo de qual o link do melo pode ser sn sendo que n é qualquer numero
 	# begin with 'https://s3' and end with 'jpg'
 	urls = []
-	matchs = text.scan(/(?<=https:\/\/s3)(.*?)(?=jpg)/)
+	
+	matchs = text.scan(/(?<=https:\/\/s3)(.*?)(?=jpg)/) # Before was  ()
 	puts "Cannot match any link in given url" && exit(1) if matchs.nil?
 	matchs.each { |match| urls.push "s3#{match[0]}jpg" }
+	urls
+end
+
+def get_page_links text
+	# dependendo de qual o link do melo pode ser sn sendo que n é qualquer numero
+	# starts with //s7, ends with .jpg
+	urls = []
+	
+	matchs = text.scan(/(?<=s7)(.*?)(?=jpg)/)
+	puts "Cannot match any link in given url" && exit(1) if matchs.nil?
+	matchs.each { |match| urls.push "https://s7#{match[0]}jpg" }
+	p urls[0]
 	urls
 end
 

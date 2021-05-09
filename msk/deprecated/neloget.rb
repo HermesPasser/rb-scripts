@@ -1,8 +1,17 @@
 # By Hermes Passer 
 # feito para essa variação do manga melo: https://chap.manganelo.com/manga-#{ARGV[0]}"
+#https://s51.mkklcdnv51.com/mangakakalot/p1/petit_wildrose/vol0_chapter_0/58.jpg
 #https://s7.mkklcdnv7.com/mangakakalot/r1/read_rasetsu_no_hana_manga/vol7_chapter_27/1.jpg
 
 require './shared'
+
+def dputs text
+	puts text if ARGV[3].include? '-v'
+end
+
+def dprint text
+	print text if ARGV[3].include? '-v'
+end
 
 def get_page_links text
 	# begin with 's7.' and end with 'jpg'
@@ -14,7 +23,9 @@ def get_page_links text
 	# end
 	# matchs.each { |match| urls.push "s7.#{match[0]}jpg" }
 	# urls
-	match_all text, /(?<=s\d\.)(.*?)(?=jpg)/
+	
+	# not working since sd+ and jpg are being ommited from the regex
+	match_all text, /s\d+\.[\S]+\.jpg/
 end
 
 def download_all urls, path
@@ -28,37 +39,41 @@ end
 
 if ARGV.length >= 3
 	urls = [
-		"https://chap.manganelo.com/manga-#{ARGV[0]}"
-		"https://manganelo.com/chapter/#{ARGV[0]}"
+		"https://mangakakalot.com/chapter/#{ARGV[0]}/chapter_$", # as in mangakakalot.com/chapter/enban_oujo_valkyrie/chapter_1 (mangakakalot)
+		"https://chap.manganelo.com/manga-#{ARGV[0]}/chapter-$", # as in chap.manganelo.com/manga-co116960/chapter-1 (manganelo mobile)
+		"https://manganelo.com/chapter/#{ARGV[0]}/chapter_$",    # as in manganelo.com/chapter/enban_oujo_valkyrie/chapter_1 (manganelo)
 	]
-	# url = "https://chap.manganelo.com/manga-#{ARGV[0]}"
-	# url2 = "https://manganelo.com/chapter/#{ARGV[0]}"
+
 	ch1, ch2 = ARGV[1].to_i, ARGV[2].to_i
-	
+	#no working anymore
 	(ch1..ch2).each do |chapter|
 		paths = ["chapter-#{chapter}", "chapter_#{chapter}"]
 		
 		# path = "chapter-#{chapter}"
 		# path2 = "chapter_#{chapter}"
 		
+		path = paths[0]
 		Dir.mkdir path if not File.exist? path
 		
-		print "--Downloading #{chapter}"
+		print "--Downloading #{chapter}\n"
+		text = ''
 		
 		# Since manga kakalot/nelo there is no unique chapter url structure
 		# then loop around all and test if any actual chapter image is found
 		urls.each do |url|
-			chapter_url = "#{url}/#{path}"
 			
-			print "from #{chapter_url}" if ARGV[3] == '-v'
+			chapter_url = url.gsub('$', chapter.to_s)#"#{url}/#{path}"
+			dprint " from #{chapter_url}."
 			text = get_url(chapter_url)
 			text = get_page_links(text)
 			
 			break if text.length != 0
-			puts "\t no chapter images found in #{chapter_url}, trying the next url..." if ARGV[3] == '-v'
+			dputs "\nNo chapter images found in #{chapter_url}, trying the next url...\n"
+			
 		end
 		
-		
+		# url = "https://chap.manganelo.com/manga-#{ARGV[0]}"
+		# url2 = "https://manganelo.com/chapter/#{ARGV[0]}"
 		# puts "\t from #{url}/#{path}" if ARGV[3] == '-v'
 		
 		# tries from chap.manganelo.com/manga-[name]/chapter-[number]
@@ -72,6 +87,7 @@ if ARGV.length >= 3
 			# text = get_url("#{url2}/#{path2}")
 			# text = get_page_links(text)
 		# end
+		
 		download_all(text, path)
 		puts  ''
 	end
