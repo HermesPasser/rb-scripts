@@ -13,13 +13,17 @@ def get_chapters_urls
     doc.xpath('//a').each do |a|
         urls.push(a['href']) if a.inner_html.include?('Chapter') 
     end
-    # since there one ch that has two entries and the 141th entry is linking to 142 url
+
+    # Fix the toc with hardcoded links that are missing or duplicated
+
+    # since there is two ch that has two entries and 
     urls.uniq!
+    # the ch 141 is linking to 142 url
     urls.insert 140, "https://tigertranslations.org/jack-of-all-trades-141/" 
-    # this one, 344 was skipped
+    # add the ch 344 that was skipped in the toc
     urls.insert 343, "https://tigertranslations.org/2021/04/06/jack-of-all-trades-344/"
-    # until chapter 351 (the last in the TOC at time when this script was written) those
-    # above were all errors found in the toc
+    # add the ch 352 that being linked to twice (by <a> 352 and 353 in the toc)
+    urls.insert 352, "https://tigertranslations.org/2021/05/05/jack-of-all-trades-352/"
     urls
 end
 
@@ -47,7 +51,7 @@ def get_chapter_text url
 end
 
 def download_all
-    file = open("C:\\Users\\Douglas\\Downloads\\jack-of-all-trades.html", "w+") 
+    file = open("jack-of-all-trades.html", "w+") 
     file << '<!DOCTYPE html> <head></head><body>'  
     file << '<h1>jack of all trades</h1> <p>translated by <a href="https://tigertranslations.org">tiger translations</a></p>'   
     
