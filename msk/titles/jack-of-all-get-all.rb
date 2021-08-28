@@ -23,7 +23,7 @@ def get_chapters_urls
     # add the ch 344 that was skipped in the toc
     urls.insert 343, "https://tigertranslations.org/2021/04/06/jack-of-all-trades-344/"
     # add the ch 352 that being linked to twice (by <a> 352 and 353 in the toc)
-    urls.insert 352, "https://tigertranslations.org/2021/05/05/jack-of-all-trades-352/"
+    urls.insert 351, "https://tigertranslations.org/2021/05/05/jack-of-all-trades-352/"
     urls
 end
 
