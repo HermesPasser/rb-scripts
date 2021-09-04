@@ -3,6 +3,7 @@ require_relative '../shared'
 def get_chapter_text url
     content = get_html_document url
     content = content.xpath('//div[@class="entry-content_wrap"]')[0]
+    content.search('figure').remove
     content
 end
 
@@ -20,7 +21,7 @@ def download_parts(ch_number, pt1_url, pt2_url, file)
     file << get_chapter_text(pt2_url)
     file << "<hr>"
 
-rescue => ex # get_chapter_text will raise if the div@ is not found, so we know that the ch is not in the given url
+rescue => ex # get_chapter_text will raise if the div@entry-content_wrap is not found, so we know that the ch is not in the given url
     puts ex
     success = false    
 ensure
@@ -32,6 +33,8 @@ def download_all
     file << '<!DOCTYPE html> <head></head><body>'  
     file << '<h1>The Yandere Came During the Night</h1> <p>translated by <a href="foxaholic.com">foxaholic</a></p>'   
     
+    # TODO: i forgot the glossary
+
     (1..139).each do |i|
         url_full_ch = "https://www.foxaholic.com/tycdtn-chapter-#{i}"
         url_pt1 = "#{url_full_ch}-part-1/"
