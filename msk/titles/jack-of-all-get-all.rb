@@ -1,10 +1,4 @@
-require 'nokogiri'
-require 'open-uri'
-
-def get_html_document url
-    html = URI.open(url).read
-    Nokogiri::HTML(html)
-end
+require_relative '../shared'
 
 def get_chapters_urls
     toc = "https://tigertranslations.org/jack-of-all-trades-7/"

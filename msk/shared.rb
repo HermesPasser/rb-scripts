@@ -7,6 +7,13 @@ $IMG_WEB_EXTS = "(.png)|(.gif)|(.jpg)|(.webp)".freeze
 # All web supported img extensions
 $IMG_WEB_EXTS_ALL = "#{$IMG_WEB_EXTS}|(.jpeg)|(.apng)|(.jfif)|(.pjpeg)|(.pjp)|(.avif)".freeze
 
+# get the content with nokogiri
+def get_html_document url
+	require 'nokogiri'
+	html = URI.open(url).read
+	Nokogiri::HTML(html)
+end
+
 # change name to get_html
 def get_url url
 	Net::HTTP.get(URI(url))

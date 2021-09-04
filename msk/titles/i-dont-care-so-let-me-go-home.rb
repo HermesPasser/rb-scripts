@@ -10,8 +10,7 @@
 #   console.log(`["${name}", "${url}"]`)
 # }
 
-require 'nokogiri'
-require 'open-uri'
+require_relative '../shared'
 
 $toc = [
     ["I Don't Care, So Do It Yourself!", nil],
@@ -132,11 +131,6 @@ $toc = [
     ["Ending (Part I)", "https://wwaraitai.co/2021/06/30/i-dont-care-so-let-me-go-home-chapter-seventy-nine/"],
     ["Ending (Part II)", "https://wwaraitai.co/2021/06/30/i-dont-care-so-let-me-go-home-chapter-eighty"]
 ]
-
-def get_html_document url
-    html = URI.open(url).read
-    Nokogiri::HTML(html)
-end
 
 def get_chapter_text url
     content = get_html_document url
