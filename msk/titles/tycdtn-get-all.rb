@@ -53,4 +53,6 @@ def download_all
     file.close
 end
 
-download_all
+if __FILE__ == $0
+    download_all
+end
