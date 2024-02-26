@@ -10,13 +10,13 @@ def get_chapters_urls
 
     # Fix the toc with hardcoded links that are missing or duplicated
 
-    # since there is two ch that has two entries and 
+    # since there is two ch that has two entries 
     urls.uniq!
-    # the ch 141 is linking to 142 url
+    # ch 141 is linking to 142 url
     urls.insert 140, "https://tigertranslations.org/jack-of-all-trades-141/" 
     # add the ch 344 that was skipped in the toc
     urls.insert 343, "https://tigertranslations.org/2021/04/06/jack-of-all-trades-344/"
-    # add the ch 352 that being linked to twice (by <a> 352 and 353 in the toc)
+    # add the ch 352 that was linked twice (by <a> 352 and 353 in the toc)
     urls.insert 351, "https://tigertranslations.org/2021/05/05/jack-of-all-trades-352/"
     urls
 end
