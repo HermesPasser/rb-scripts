@@ -32,10 +32,13 @@ def scrap_title prefix, display_title
         file << "<!DOCTYPE html> <head><title>#{display_title}</title></head><body>"  
         file << "<h1>#{display_title}</h1> <p>translated by <a href=\"https://tintanton.wordpress.com\">Tintanton</a></p>" 
     
-        chs = get_chapters(prefix)
+        urls = get_chapters(prefix)
         chapters_got = []
         first = true
-        chs.each do |url|
+
+        # Generating TOC
+        file << "<table>"
+        urls.each do |url|
             match = /chapter-(\d+)/.match(url)
             if match.nil?
                 chapter = chapters_got[-1] + 1
@@ -43,23 +46,32 @@ def scrap_title prefix, display_title
                 chapter = match.match(1).to_i
             end
             chapters_got.push(chapter)
-
-            print "#{chapter}\r"
-            file << scrap_chapter(url)
+            
+            file << "<tr><td><a href=\"##{chapter}\">Chapter #{chapter}</a></td></tr>"
+            chapter
         end
+        file << "</table>"
 
+        urls.each_with_index  do |url, i|
+            chapter = chapters_got[i]
+            print "#{chapter}\r"
+
+            file << "<div id=\"#{chapter}\"></div>"
+            file << scrap_chapter(url)
+            file << "</div>"
+        end
+        file << "</body></html>"
+        
         # Look for missing chapters since the sitemap does not
-        # follow the hs-<number>-<chapter-title> pattern in all
-        # urls 
+        # follow the hs-<number>-<chapter-title> pattern in all urls
         raise "No chapter scrapped" if chapters_got.size == 0
         chapter_range = (1..chapters_got[-1]).to_a
         missing_chapters = chapter_range.difference chapters_got
         missing_chapters.each do |ch|
             puts "Chapter #{ch} was not found"    
         end
-
-        file << "</body></html>"
     end
+
 end
 
 if __FILE__ == $0
