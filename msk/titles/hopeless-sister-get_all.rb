@@ -14,31 +14,50 @@ def get_chapters title
     # older post may disappear from sitemap). We match regex of date so
     # we skip the TOC url
     doc = get_html_document("https://tintanton.wordpress.com/sitemap.xml")
-    urls = doc.xpath('//loc').select { |l| l.text.include?(title) && date_regex.match(l.text) }
-
-    # we're reordering based on the url since <changefreq> not always match the order.
-    url_map = {}
-    urls.each do |l| 
-        date = date_regex.match(l.text).match(0).gsub("/", "-")
-        url_map[date] = l.text
-    end
-    url_map.sort.map { |list| list[1] }
+    urls = doc.xpath('//loc').select { |l| l.text.include?(title) && date_regex.match(l.text) }.map { |l| l.text}
+    
+    # text-based reordering since <changefreq> not always match the order
+    # https://tintanton.wordpress.com/2022/04/08/hs-chapter-85-the-hopeless-sister-is-confessed-to/
+    urls.sort!
+    # manually adding chapter 154 since the url pattern is different
+    urls.insert(153, "https://tintanton.wordpress.com/2023/04/27/__trashed/")
+    urls
 end
 
-def scrap_title title
+def scrap_title prefix, display_title
     # Save as "utf8 with bom" since kindle likes it
-    File.open("#{title}.html", "w:utf-8") do |file|
+    File.open("#{display_title}.html", "w:utf-8") do |file|
         file << "\xEF\xBB\xBF".force_encoding("UTF-8")
 
-        file << "<!DOCTYPE html> <head><title>I, the Hopeless Sister, Love My Sister
-</title></head><body>"  
-        file << "<h1>#{title}</h1> <p>translated by <a href=\"https://tintanton.wordpress.com\">Tintanton</a></p>" 
+        file << "<!DOCTYPE html> <head><title>#{display_title}</title></head><body>"  
+        file << "<h1>#{display_title}</h1> <p>translated by <a href=\"https://tintanton.wordpress.com\">Tintanton</a></p>" 
+    
+        chs = get_chapters(prefix)
+        chapters_got = []
+        first = true
+        chs.each do |url|
+            match = /chapter-(\d+)/.match(url)
+            if match.nil?
+                chapter = chapters_got[-1] + 1
+            else
+                chapter = match.match(1).to_i
+            end
+            chapters_got.push(chapter)
 
-        get_chapters(title).each do |url|
-            chapter = /chapter-(\d+)/.match(url).match(1)
-            print chapter + "\r"
+            print "#{chapter}\r"
             file << scrap_chapter(url)
         end
+
+        # Look for missing chapters since the sitemap does not
+        # follow the hs-<number>-<chapter-title> pattern in all
+        # urls 
+        raise "No chapter scrapped" if chapters_got.size == 0
+        chapter_range = (1..chapters_got[-1]).to_a
+        missing_chapters = chapter_range.difference chapters_got
+        missing_chapters.each do |ch|
+            puts "Chapter #{ch} was not found"    
+        end
+
         file << "</body></html>"
     end
 end
@@ -48,6 +67,5 @@ if __FILE__ == $0
     # since not all urls in sitemap (aside from hopeless sister ones)
     # have the actual title of the work to scrap, rendering my title-based
     # filter useless
-    title = "hopeless-sister"
-    scrap_title title
+    scrap_title "hs", "I, the Hopeless Sister, Love My Sister"
 end
