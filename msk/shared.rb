@@ -46,6 +46,58 @@ def scrap url, pattern, folder = nil
 	end
 end
 
+# Abstracts the boilerplate of making a UTF-8 DOM encoded HTML document with a table of contents 
+class HtmlBuilder
+	def initialize title
+		@sections = []
+		@book_title = title.gsub(" ", "_").downcase
+		self._create_file
+	end
+
+	def _create_file
+		filename = @book_title.gsub(" ", "_").downcase + ".html"
+		@file = File.open(filename, "w:utf-8")
+        @file << "\xEF\xBB\xBF".force_encoding("UTF-8")
+		@file << "<!DOCTYPE html> <head><title>#{@book_title}</title></head><body>"  
+	end
+
+	def add_header translator_name, translator_url
+		@file << "<h1>#{@book_title}</h1> <p>translated by <a href=\"#{translator_url}\">#{translator_name}</a></p>" 
+		@file << "<p>TOC</p><table>"
+		self
+	end
+
+	def _add_section_to_toc title
+		@file << "<tr><td><a href=\"##{title}\">Chapter #{title}</a></td></tr>"
+	end
+
+	def add_section title, contents, should_print_title = true
+		self._add_section_to_toc title unless title.nil?
+
+		temp = Tempfile.new
+		if title
+			temp << "<div id=\"#{title}\"></div>"
+
+			temp << "<h2>#{title}</h2>" if should_print_title
+			temp << contents
+			temp << "</div>"
+		else
+			temp << "<h2>#{title}</h2>" if should_print_title
+			temp << contents
+		end
+		temp << "<hr>"
+		
+		@sections << temp
+		self
+	end
+
+	def build
+		@file << "</table><hr>" # Closes the TOC
+		@sections.each { |section| section.seek(0); @file << section.read }
+		@file << "</body></html>"
+	end
+end
+
 if __FILE__ == $0
 	scrap ARGV[0], ARGV[1], ARGV[2]
 end

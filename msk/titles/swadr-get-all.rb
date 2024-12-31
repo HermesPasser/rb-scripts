@@ -29,7 +29,7 @@ end
 def main
     File.open("swadr-v4c11-onwards.html", "w") do |file|
         file << "<!DOCTYPE html> <head><title>The Sword and The Dress</title></head><body>"  
-        file << "<h1>The Sword and The Dress</h1> <p>translated by <a href=\"hthttps://nopa15.wordpress.com/\">NOPA15</a></p>" 
+        file << "<h1>The Sword and The Dress</h1> <p>translated by <a href=\"https://nopa15.wordpress.com/\">NOPA15</a></p>" 
         get_toc.each { |url| puts (url); file << get_chapter(url) }
         file << "</body></html>"
     end
