@@ -1,0 +1,17 @@
+GEM
+  specs:
+    nokogiri (1.16.2-x64-mingw-ucrt)
+      racc (~> 1.4)
+    racc (1.7.3)
+
+PLATFORMS
+  x64-mingw-ucrt
+
+DEPENDENCIES
+  nokogiri (>= 1.16.2)
+
+RUBY VERSION
+   ruby 3.2.3p157
+
+BUNDLED WITH
+   2.5.6
