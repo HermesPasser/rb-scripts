@@ -38,7 +38,7 @@ def pdf_to_png(
             if area_to_crop:
                 image = image.crop(area_to_crop)
 
-            image.save(f"{counter}.jpg")
+            image.save(f"{str(counter).zfill(max_pages)}.jpg")
             counter += 1
 
 
